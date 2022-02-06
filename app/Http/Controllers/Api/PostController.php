@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Core\Controllers\BaseHttpController;
+use App\Core\Traits\ApiResponder;
 use App\Http\Requests\Post\StorePostRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
 use App\Models\Post;
 use App\Repositories\PostRepository;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Laravel\Sanctum\Sanctum;
 use function app;
 
 /**
@@ -19,6 +22,8 @@ use function app;
 class PostController extends BaseHttpController
 {
 
+    use ApiResponder;
+
     public function __construct()
     {
         parent::__construct();
@@ -28,9 +33,16 @@ class PostController extends BaseHttpController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json($this->repository->getAll());
+//        $token = $request->bearerToken();
+//        $model = Sanctum::$personalAccessTokenModel;
+//        $accessToken = $model::findToken($token);
+//        dd($accessToken->toArray());
+
+        return $this->success([
+            $this->repository->getAll()
+        ]);
     }
 
     /**

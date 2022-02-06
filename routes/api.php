@@ -23,6 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 $postController = PostController::class;
-Route::prefix('posts')->group(function () use ($postController) {
+Route::prefix('posts')->middleware('auth:sanctum')->group(function () use ($postController) {
     Route::get('/', [$postController, 'index'])->name('posts.index');
 });

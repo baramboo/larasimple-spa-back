@@ -32,7 +32,7 @@ class PostRepository extends BaseRepository implements ResourceRepositoryInterfa
      */
     public function getAll(): LengthAwarePaginator
     {
-        $condition = $this->conditions();
+        $condition = $this->conditions()->with('comments');
 
         return QueryBuilder::for($condition)
             ->allowedFilters([ /** filtering process */

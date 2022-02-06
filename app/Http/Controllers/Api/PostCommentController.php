@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Core\Controllers\BaseHttpController;
+use App\Core\Controllers\BaseApiController;
 use App\Models\PostComment;
 use App\Repositories\PostCommentRepository;
 use Illuminate\Http\Request;
@@ -10,11 +10,11 @@ use function app;
 
 /**
  * Class PostCommentController
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\Api
  *
  * @property PostCommentRepository $repository
  */
-class PostCommentController extends BaseHttpController
+class PostCommentController extends BaseApiController
 {
 
     public function __construct()

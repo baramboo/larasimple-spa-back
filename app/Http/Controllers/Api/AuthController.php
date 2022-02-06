@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Core\Traits\ApiResponder;
+use App\Core\Controllers\BaseApiController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
-
-class ApiAuthController extends Controller
+/**
+ * Class AuthController
+ * @package App\Http\Controllers\Api
+ *
+ */
+class AuthController extends BaseApiController
 {
-    use ApiResponder;
 
     public function login(Request $request)
     {

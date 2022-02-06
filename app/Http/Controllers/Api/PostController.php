@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Core\Controllers\BaseHttpController;
-use App\Core\Traits\ApiResponder;
+use App\Core\Controllers\BaseApiController;
 use App\Http\Requests\Post\StorePostRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
 use App\Models\Post;
@@ -15,14 +14,12 @@ use function app;
 
 /**
  * Class PostController
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\Api
  *
  * @property PostRepository $repository
  */
-class PostController extends BaseHttpController
+class PostController extends BaseApiController
 {
-
-    use ApiResponder;
 
     public function __construct()
     {

@@ -3,20 +3,21 @@
 namespace App\Core\Controllers;
 
 use App\Core\Repositories\BaseRepository;
+use App\Core\Traits\ApiResponder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 /**
- * Class BaseHttpController
+ * Class BaseApiController
  * @package App\Http\Controllers
  *
  * @property BaseRepository $repository
  */
-class BaseHttpController extends BaseController
+class BaseApiController extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, ApiResponder;
 
     protected $repository = null;
     protected $formatter;

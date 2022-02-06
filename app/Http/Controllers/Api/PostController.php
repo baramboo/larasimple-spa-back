@@ -110,7 +110,7 @@ class PostController extends BaseApiController
         if ($post->author_id != auth()->user()->id) {
             return $this->forbiddenApiResponse(
                 [
-                    'description' => 'Only Post Author Can perform this operation.'
+                    'description' => 'Only Post Author can perform this operation.'
                 ]
             );
         }

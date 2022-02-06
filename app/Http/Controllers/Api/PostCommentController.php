@@ -111,7 +111,7 @@ class PostCommentController extends BaseApiController
         if ($postComment->author_id != auth()->user()->id) {
             return $this->forbiddenApiResponse(
                 [
-                    'description' => 'Only Post Author Can perform this operation.'
+                    'description' => 'Only Comment Author can perform this operation.'
                 ]
             );
         }

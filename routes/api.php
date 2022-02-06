@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\Auth\AuthLoginController;
+use App\Http\Controllers\Api\Auth\AuthRegisterController;
 use App\Http\Controllers\Api\PostController;
-use App\Http\Controllers\AuthTokenController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthLoginController::class, 'login']);
+Route::post('/register', [AuthRegisterController::class, 'register']);
+
 //Route::post('/sanctum/token', AuthTokenController::class);
 //
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

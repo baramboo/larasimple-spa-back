@@ -1,26 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Core\Controllers\BaseApiController;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use function config;
+use function response;
 
 /**
- * Class AuthController
+ * Class AuthLoginController
  * @package App\Http\Controllers\Api
  *
  */
-class AuthController extends BaseApiController
+class AuthLoginController extends BaseApiController
 {
 
     public function login(Request $request)
     {
         $request->validate([
             'email' => ['required', 'email'],
-            'password' => 'required|min:6',
-            'remember_me' => 'integer|in:1,2'
+            'password' => ['required', 'min:6'],
+            'remember_me' => ['integer','in:1,2']
         ]);
 
         $credentials = $request->only('email', 'password');

@@ -33,6 +33,23 @@ trait ApiResponder
     }
 
     /**
+     * Return a warning JSON response.
+     *
+     * @param  array|string  $data
+     * @param  string  $message
+     * @param  int|null  $code
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function warningApiResponse($data, string $message = null, int $code = 400)
+    {
+        return response()->json([
+            'status' => 'Warning',
+            'message' => $message,
+            'data' => $data
+        ], $code);
+    }
+
+    /**
      * Return an error JSON response.
      *
      * @param  string  $message
@@ -49,4 +66,20 @@ trait ApiResponder
         ], $code);
     }
 
+    /**
+     * Return aaccess denied JSON response.
+     *
+     * @param  array|string  $data
+     * @param  string  $message
+     * @param  int|null  $code
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function accessDeniedApiResponse($data = [], string $message = 'Access denied', int $code = 403)
+    {
+        return response()->json([
+            'status' => 'Warning',
+            'message' => $message,
+            'data' => $data
+        ], $code);
+    }
 }

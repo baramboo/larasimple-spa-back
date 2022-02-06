@@ -28,4 +28,8 @@ Route::post('/register', [AuthRegisterController::class, 'register']);
 $postController = PostController::class;
 Route::prefix('posts')->middleware('auth:api')->group(function () use ($postController) {
     Route::get('/', [$postController, 'index'])->name('posts.index');
+    Route::get('/{post}', [$postController, 'show'])->name('post.show');
+    Route::post('/', [$postController, 'store'])->name('post.store');
+    Route::put('/{post}', [$postController, 'update'])->name('post.update');
+    Route::delete('/{post}', [$postController, 'delete'])->name('post.delete');
 });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\AuthTokenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,4 +20,9 @@ Route::post('/sanctum/token', AuthTokenController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+$postController = PostController::class;
+Route::prefix('posts')->group(function () use ($postController) {
+    Route::get('/', [$postController, 'index'])->name('posts.index');
 });

@@ -40,7 +40,7 @@ class PostController extends BaseHttpController
 //        $accessToken = $model::findToken($token);
 //        dd($accessToken->toArray());
 
-        return $this->success([
+        return $this->successApiResponse([
             $this->repository->getAll()
         ]);
     }

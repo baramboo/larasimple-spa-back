@@ -22,9 +22,9 @@ class ApiAuthController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        if (!Auth::attempt($credentials)) {
 
-            return $this->error('Invalid credentials', '423');
+        if (!Auth::attempt($credentials)) {
+            return $this->errorApiResponse('Invalid credentials', 422);
         }
 
         $token = $this->createAccessToken($request);

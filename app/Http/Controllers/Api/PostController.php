@@ -108,7 +108,11 @@ class PostController extends BaseApiController
     public function delete(Post $post)
     {
         if ($post->author_id != auth()->user()->id) {
-            return $this->accessDeniedApiResponse();
+            return $this->forbiddenApiResponse(
+                [
+                    'description' => 'Only Post Author Can perform this operation.'
+                ]
+            );
         }
 
         if ($this->repository->delete($post)) {
@@ -118,6 +122,7 @@ class PostController extends BaseApiController
             );
         } else {
             return $this->errorApiResponse(
+                [],
                 'Unknown error',
                 400,
             );

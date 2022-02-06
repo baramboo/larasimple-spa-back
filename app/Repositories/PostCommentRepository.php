@@ -5,7 +5,11 @@ namespace App\Repositories;
 use App\Core\Repositories\BaseRepository;
 use App\Core\Repositories\ResourceRepositoryInterface;
 use App\Models\PostComment;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class PostCommentRepository
@@ -23,11 +27,24 @@ class PostCommentRepository extends BaseRepository implements ResourceRepository
     }
 
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getAll(): Collection
+    public function getAll(): LengthAwarePaginator
     {
-        return $this->conditions()->get();
+        $condition = $this->conditions()->with(['author','post:id,title']);
+
+        return QueryBuilder::for($condition)
+            ->allowedFilters([ /** filtering process */
+                AllowedFilter::exact(PostComment::getFieldAlias('id'), 'id'),
+                AllowedFilter::exact(PostComment::getFieldAlias('author_id'), 'author_id'),
+                AllowedFilter::partial(PostComment::getFieldAlias('comment'), 'comment'),
+            ])
+            ->allowedSorts([ /** sorting process */
+                AllowedSort::field(PostComment::getFieldAlias('id'), 'id'),
+                AllowedSort::field(PostComment::getFieldAlias('author_id'), 'author_id'),
+            ])
+            ->defaultSort('-id')
+            ->withPaginate();
     }
 
     /**

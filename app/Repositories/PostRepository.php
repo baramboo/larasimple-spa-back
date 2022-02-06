@@ -32,16 +32,17 @@ class PostRepository extends BaseRepository implements ResourceRepositoryInterfa
      */
     public function getAll(): LengthAwarePaginator
     {
-        $condition = $this->conditions()->with('comments');
+        $condition = $this->conditions()->with(['author', 'comments.author']);
 
         return QueryBuilder::for($condition)
             ->allowedFilters([ /** filtering process */
                 AllowedFilter::exact(Post::getFieldAlias('id'), 'id'),
                 AllowedFilter::partial(Post::getFieldAlias('title'), 'title'),
+                AllowedFilter::partial(Post::getFieldAlias('description'), 'description'),
             ])
             ->allowedSorts([ /** sorting process */
                 AllowedSort::field(Post::getFieldAlias('id'), 'id'),
-                AllowedFilter::exact(Post::getFieldAlias('author_id'), 'author_id'),
+                AllowedSort::field(Post::getFieldAlias('author_id'), 'author_id'),
             ])
             ->defaultSort('-id')
             ->withPaginate();

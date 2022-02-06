@@ -38,14 +38,14 @@ class PostComment extends CoreModel
     use DateTrait;
 
     protected $fillable = [
-        'post_id_',
+        'post_id',
         'author_id',
         'comment',
         'created_at'
     ];
 
     protected $hidden = [
-        'updated_at'
+
     ];
 
     /**

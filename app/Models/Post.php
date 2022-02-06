@@ -47,7 +47,7 @@ class Post extends CoreModel
     ];
 
     protected $hidden = [
-        'updated_at'
+
     ];
 
     public static function attributesAliases(): array

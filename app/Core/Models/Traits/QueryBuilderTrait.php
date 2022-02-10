@@ -2,9 +2,8 @@
 
 namespace App\Core\Models\Traits;
 
-use App\Core\Models\QueryBuilders\CoreEloquentBuilder;
 use App\Core\Models\QueryBuilders\CoreQueryBuilder;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Query\Builder;
 
 trait QueryBuilderTrait
@@ -24,13 +23,16 @@ trait QueryBuilderTrait
     }
 
     /**
-     * Bind base eloquent builder
+     * Default paginator
      *
-     * @param Builder $query
-     * @return CoreEloquentBuilder|\Illuminate\Database\Eloquent\Builder|Model
+     * Call ->withPaginate() function in your model query builders to get default paginator.
+     * If you want to use your own custom pagination - call ->paginate(//with params
+     *
+     * @param int $limit
+     * @return LengthAwarePaginator
      */
-    public function newEloquentBuilder($query)
+    public function withPaginate(int $limit = 10) : LengthAwarePaginator
     {
-        return new CoreEloquentBuilder($query);
+        return $this->paginate(request()->query('limit', $limit));
     }
 }

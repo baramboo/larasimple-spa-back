@@ -70,7 +70,10 @@ class PostController extends BaseApiController
     public function show(Post $post)
     {
         return $this->successApiResponse(
-            $post->load('comments')
+            [
+                'post' => $post->load('author'),
+                'comments' => $post->comments()->with('author')->orderByDesc('post_comments.id')->get()
+            ]
         );
     }
 

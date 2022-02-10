@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class PostComment
+ * App\Models\PostComment
  *
- * @package App\Models
  * @property int $id
  * @property int $post_id Post
  * @property int $author_id Comment Author
@@ -67,7 +66,9 @@ class PostComment extends CoreModel
     public static function attributesAliases(): array
     {
         return [
-            // attributes with aliases
+//            // attributes with aliases
+//            'post_id' => 'postId',
+            'author_id' => 'byCommentAuthorId'
         ];
     }
 }

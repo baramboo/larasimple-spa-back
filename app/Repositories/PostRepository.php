@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Core\Repositories\BaseRepository;
 use App\Core\Repositories\ResourceRepositoryInterface;
 use App\Models\Post;
+use App\Models\PostComment;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -32,11 +33,13 @@ class PostRepository extends BaseRepository implements ResourceRepositoryInterfa
      */
     public function getAll(): LengthAwarePaginator
     {
-        $condition = $this->conditions()->with(['author', 'comments.author']);
+        $condition = $this->conditions()->with(['author', 'recentComments']);
 
         return QueryBuilder::for($condition)
             ->allowedFilters([ /** filtering process */
                 AllowedFilter::exact(Post::getFieldAlias('id'), 'id'),
+                AllowedFilter::exact(Post::getFieldAlias('author_id'), 'author_id'),
+                AllowedFilter::scope(Post::getFieldAlias('commentAuthorId'), 'byCommentAuthorId'),
                 AllowedFilter::partial(Post::getFieldAlias('title'), 'title'),
                 AllowedFilter::partial(Post::getFieldAlias('description'), 'description'),
             ])
@@ -44,8 +47,8 @@ class PostRepository extends BaseRepository implements ResourceRepositoryInterfa
                 AllowedSort::field(Post::getFieldAlias('id'), 'id'),
                 AllowedSort::field(Post::getFieldAlias('author_id'), 'author_id'),
             ])
-            ->defaultSort('-id')
-            ->withPaginate();
+            ->defaultSort('id')
+            ->paginate(request()->query($this->defaultPaginatorName, $this->defaultPaginatorPerPage));
     }
 
     /**

@@ -4,24 +4,25 @@ namespace App\Models;
 
 use App\Core\Models\CoreModel;
 use App\Core\Traits\DateTrait;
+use App\Models\QueryBuilders\PostQueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class Post
+ * App\Models\Post
  *
- * @package App\Models
  * @property int $id
  * @property int $author_id Author ID
  * @property string $title Title
  * @property string $description Description
  * @property string $created_at
  * @property string $updated_at
+ * @property-read \App\Models\User $author
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PostComment[] $comments
  * @property-read int|null $comments_count
- * @property-read \App\Models\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PostComment[] $recentComments
+ * @property-read int|null $recent_comments_count
  * @method static \Database\Factories\PostFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
@@ -50,10 +51,16 @@ class Post extends CoreModel
 
     ];
 
+    public function queryBuilder($query)
+    {
+        return new PostQueryBuilder($query);
+    }
+
     public static function attributesAliases(): array
     {
         return [
             // attributes with aliases
+//            'author_id' => 'authorId'
         ];
     }
 
@@ -72,4 +79,16 @@ class Post extends CoreModel
     {
         return $this->hasMany(PostComment::class, 'post_id', 'id');
     }
+
+    /**
+     * @return HasMany
+     */
+    public function recentComments() : HasMany
+    {
+        return $this->hasMany(PostComment::class, 'post_id', 'id')
+            ->orderBy('id', 'DESC')
+            ->limit(config('paginator.default_related_resents'));
+    }
+
+
 }

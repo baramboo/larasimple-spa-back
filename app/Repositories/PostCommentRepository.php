@@ -44,7 +44,7 @@ class PostCommentRepository extends BaseRepository implements ResourceRepository
                 AllowedSort::field(PostComment::getFieldAlias('author_id'), 'author_id'),
             ])
             ->defaultSort('-id')
-            ->withPaginate();
+            ->paginate(request()->query($this->defaultPaginatorName, $this->defaultPaginatorPerPage));
     }
 
     /**

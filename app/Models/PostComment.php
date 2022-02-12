@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Core\Models\CoreModel;
 use App\Core\Traits\DateTrait;
+use App\Models\QueryBuilders\PostCommentQueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -48,6 +49,15 @@ class PostComment extends CoreModel
     ];
 
     /**
+     * @param $query
+     * @return PostCommentQueryBuilder
+     */
+    public function queryBuilder($query)
+    {
+        return new PostCommentQueryBuilder($query);
+    }
+
+    /**
      * @return BelongsTo
      */
     public function author() : BelongsTo
@@ -68,7 +78,6 @@ class PostComment extends CoreModel
         return [
 //            // attributes with aliases
 //            'post_id' => 'postId',
-            'author_id' => 'byCommentAuthorId'
         ];
     }
 }

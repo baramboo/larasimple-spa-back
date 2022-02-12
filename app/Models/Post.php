@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post query()
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereAuthorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereCommentAuthorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereId($value)
@@ -51,23 +52,19 @@ class Post extends CoreModel
 
     ];
 
-    public function queryBuilder($query)
-    {
-        return new PostQueryBuilder($query);
-    }
 
     public static function attributesAliases(): array
     {
         return [
             // attributes with aliases
-//            'author_id' => 'authorId'
+            'whereCommentAuthorId' => 'byCommentAuthor',
         ];
     }
 
     /**
      * @return BelongsTo
      */
-    public function author() : BelongsTo
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
@@ -75,7 +72,7 @@ class Post extends CoreModel
     /**
      * @return HasMany
      */
-    public function comments() : HasMany
+    public function comments(): HasMany
     {
         return $this->hasMany(PostComment::class, 'post_id', 'id');
     }
@@ -83,7 +80,7 @@ class Post extends CoreModel
     /**
      * @return HasMany
      */
-    public function recentComments() : HasMany
+    public function recentComments(): HasMany
     {
         return $this->hasMany(PostComment::class, 'post_id', 'id')
             ->orderBy('id', 'DESC')

@@ -3,11 +3,12 @@
 namespace App\Core\Models\QueryBuilders;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder as BaseBuilder;
+use Spatie\QueryBuilder\QueryBuilder as BaseBuilder;
+//use Illuminate\Database\Eloquent\Builder as BaseBuilder;
 
 /**
- * Class BaseEloquentBuilder
- * @package App\Models\QueryBuilders\BaseEloquentBuilder
+ * Class CoreEloquentBuilder
+ * @package App\Models\QueryBuilders
  */
 class CoreEloquentBuilder extends BaseBuilder
 {

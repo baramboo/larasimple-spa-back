@@ -2,25 +2,12 @@
 
 namespace App\Core\Models\Traits;
 
-use App\Core\Models\QueryBuilders\CoreQueryBuilder;
+use App\Core\Models\QueryBuilders\CoreEloquentBuilder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Query\Builder;
 
 trait QueryBuilderTrait
 {
-    /**
-     * Bind base query builder
-     *
-     * @return CoreQueryBuilder | Builder
-     */
-    protected function newBaseQueryBuilder()
-    {
-        $connection = $this->getConnection();
-
-        return new CoreQueryBuilder(
-            $connection, $connection->getQueryGrammar(), $connection->getPostProcessor()
-        );
-    }
 
     /**
      * Default paginator

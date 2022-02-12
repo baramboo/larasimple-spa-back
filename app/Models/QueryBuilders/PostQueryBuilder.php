@@ -26,7 +26,7 @@ class PostQueryBuilder extends CoreEloquentBuilder
      */
     public function whereCommentAuthorId($id): PostQueryBuilder
     {
-        dd('whereCommentAuthorId', $id);
+//        dd('whereCommentAuthorId', $id);
         return $this->whereHas('comments', function ($query) use ($id) {
             return $query->where('author_id', $id);
         });
